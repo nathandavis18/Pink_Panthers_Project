@@ -275,21 +275,24 @@ namespace Pink_Panthers_Project.Controllers
                 {
                     colors.Add(new RGB(0, 0, 255, 1));
                 }
-                string currentStudentGrade = classPerformance.Where(c => c.StudentID == account.ID).Select(c => c.StudentGrade).SingleOrDefault();
+                string? currentStudentGrade = classPerformance.Where(c => c.StudentID == account.ID).Select(c => c.StudentGrade).SingleOrDefault();
                 int index = 0;
-                if (currentStudentGrade.Equals("A")) index = 0;
-                else if (currentStudentGrade.Equals("A-")) index = 1;
-                else if (currentStudentGrade.Equals("B+")) index = 2;
-                else if (currentStudentGrade.Equals("B")) index = 3;
-                else if (currentStudentGrade.Equals("B-")) index = 4;
-                else if (currentStudentGrade.Equals("C+")) index = 5;
-                else if (currentStudentGrade.Equals("C")) index = 6;
-                else if (currentStudentGrade.Equals("C-")) index = 7;
-                else if (currentStudentGrade.Equals("D+")) index = 8;
-                else if (currentStudentGrade.Equals("D")) index = 9;
-                else if (currentStudentGrade.Equals("D-")) index = 10;
-                else if (currentStudentGrade.Equals("E")) index = 11;
-                colors[index] = new RGB(0, 255, 0, 1);
+                if (currentStudentGrade != null)
+                {
+                    if (currentStudentGrade.Equals("A")) index = 0;
+                    else if (currentStudentGrade.Equals("A-")) index = 1;
+                    else if (currentStudentGrade.Equals("B+")) index = 2;
+                    else if (currentStudentGrade.Equals("B")) index = 3;
+                    else if (currentStudentGrade.Equals("B-")) index = 4;
+                    else if (currentStudentGrade.Equals("C+")) index = 5;
+                    else if (currentStudentGrade.Equals("C")) index = 6;
+                    else if (currentStudentGrade.Equals("C-")) index = 7;
+                    else if (currentStudentGrade.Equals("D+")) index = 8;
+                    else if (currentStudentGrade.Equals("D")) index = 9;
+                    else if (currentStudentGrade.Equals("D-")) index = 10;
+                    else if (currentStudentGrade.Equals("E")) index = 11;
+                    colors[index] = new RGB(0, 255, 0, 1);
+                }
             }
             else
             {
