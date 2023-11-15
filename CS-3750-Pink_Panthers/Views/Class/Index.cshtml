@@ -1,0 +1,97 @@
+﻿@using Pink_Panthers_Project.Util
+
+@model Pink_Panthers_Project.Models.ViewModel
+
+@{
+    ViewData["Title"] = "Course";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <h2>Courses:</h2>
+            @if (Model!.Account!.isTeacher)
+            {
+                if (Model.TeachingCourses!.Count == 0)
+                {
+                    <p>You don't have any courses yet</p>
+                }
+                else
+                {
+                    int courses = 0;
+                    <table>
+                        <tr>
+                            <th>Class</th>
+                            <th>Room</th>
+                            <th>Days</th>
+                            <th>Time</th>
+                            <th>Assignments</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        @foreach (var course in Model?.TeachingCourses!)
+                        {
+                            courses++;
+                            <tr>
+                                <td>@Html.Raw(course.DepartmentCode + course.CourseNumber + ": " + course.CourseName)</td>
+                                <td>@course.Room</td>
+                                <td>@course.Days</td>
+                                <td>@course.StartTime.ToString("hh:mm tt") - @course.EndTime.ToString("hh:mm tt")</td>
+                                <td><a class="btn btn-primary" asp-action="Assignments" asp-route-id="@course.ID" id="@Html.Raw(course.ID + "assignmentBtn")">View Assignments</a></td>
+                                <td><a class="btn btn-light" asp-action="EditClass" asp-route-id="@course.ID">Edit</a></td>
+                                <td><a class="btn btn-warning" asp-action="DeleteCourse" id="Delete_@courses" asp-route-id="@course.ID">Delete</a></td>
+                            </tr>
+                        }
+                    </table>
+                }
+            }
+            else if (!Model.Account!.isTeacher)
+            {
+                if (Model.RegisteredCourses!.Count == 0)
+                {
+                    <p>You aren't registered for any classes yet!</p>
+                }
+                else
+                {
+                    <table>
+                        <tr>
+                            <th>Class</th>
+                            <th>Room</th>
+                            <th>Days</th>
+                            <th>Time</th>
+                            <th>Assignments</th>
+                        </tr>
+                        @foreach (var course in Model?.RegisteredCourses!)
+                        {
+                            <tr>
+                                <td>@Html.Raw(course.DepartmentCode + course.CourseNumber + ": " + course.CourseName)</td>
+                                <td>@course.Room</td>
+                                <td>@course.Days</td>
+                                <td>@course.StartTime.ToString("hh:mm tt") - @course.EndTime.ToString("hh:mm tt")</td>
+                                <td><a class="btn btn-primary" asp-action="Assignments" asp-route-id="@course.ID" id="@Html.Raw(course.ID + "assignmentBtn")">View Assignments</a></td>
+                            </tr>
+                        }
+                    </table>
+                }
+            }
+            @if (Model.Account.isTeacher)
+            {
+                <div class="col-md-4">
+                    <a asp-action="addClass" asp-controller="Profile" id="CreateClass" class="btn btn-primary">Add Class</a>
+                </div>
+            }
+
+
+
+
+
+        </div>
+    </div>
+</body>
+</html>

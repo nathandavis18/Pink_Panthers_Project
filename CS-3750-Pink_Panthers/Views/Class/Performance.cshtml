@@ -1,0 +1,59 @@
+﻿@model Pink_Panthers_Project.Models.ViewModel
+
+@{
+	ViewData["Title"] = "Course";
+}
+
+
+<head>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script type="text/javascript">
+		document.addEventListener('DOMContentLoaded', function () {
+
+			var gradesArray = @Html.Raw(Json.Serialize(Model!.StudentSubmissions));
+			var max = @Model.MaxGrade;
+			var scoresArray = [];
+			for (let i = 0; i <= max; i++){
+			scoresArray[i] = i;
+			}
+
+			var data = [{
+				type: 'bar',
+				x: scoresArray,
+				y: gradesArray,
+				marker: {
+					color: 'rgba(0,255,0,1)'
+				},
+				boxpoints: 'false',
+				line: {
+					color: '#a64d79'
+				},
+				hoverinfo: 'x'
+			}];
+			var layout = {
+				title: 'Class Performance',
+				xaxis: {
+					range: [0, max]
+				},
+				yaxis: {
+					zeroline: false,
+					range: [0, 20]
+				}
+			};
+
+			Plotly.newPlot('performance', data, layout);
+		});
+	</script>
+
+
+</head>
+<div class="container">
+
+	<h2>@Model.AssignmentName</h2>
+	@if (Model!.StudentSubmissions!.Count != 0)
+	{
+		<div class="row mt-3">
+			<div id="performance" />
+		</div>
+	}
+</div>

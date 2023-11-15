@@ -1,0 +1,71 @@
+﻿@model Pink_Panthers_Project.Models.ViewModel
+
+@{
+    ViewData["Title"] = "Account";
+    Layout = "_Layout";
+    int creditHours = 0;
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        @if (Model != null && !Model.Account!.isTeacher)
+        {
+            @foreach (var course in Model.RegisteredCourses!)
+            {
+                creditHours += course.hours;
+            }
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center" style="color: black;">
+                        Account Balance
+                    </div>
+                    <div class="card-body">
+                        <p>Total Credit Hours: @creditHours</p>
+                        <p>Total Cost: $<span id="totalCost">@String.Format("{0:0.00}", @Model.Account.AmountToBePaid)</span></p>
+                        <p>Total Paid: $<span id="totalPaid"></span></p>
+
+                        <form asp-controller="Server" asp-action="CreateCheckoutSession" method="POST">
+                            <div class="form-group">
+                                <label for="amountToPay">Amount to Pay<span style="color: red;">*</span></label>
+                                <input type="number" class="form-control" id="amountToPay" name="amountToPay" value="@String.Format("{0:0.00}", @Model.Account.AmountToBePaid)" step="0.01" oninput="updateUnitAmount(this.value)">
+
+                            </div>
+
+                            <!-- Add a hidden input to store the amount -->
+                            <input type="hidden" id="hiddenAmountToPay" name="hiddenAmountToPay" value="@Model.Account.AmountToBePaid">
+
+
+                            <button type="submit" id="checkout-button" class="btn btn-primary checkout-button">Checkout</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    function updateUnitAmount(amountToPay)
+    {
+        // Check if the amountToPay is a valid number
+        if (!isNaN(amountToPay)) {
+            const unitAmountCents = parseFloat(amountToPay);
+
+            // Update the hidden input value with the amount in cents
+            document.getElementById('hiddenAmountToPay').value = unitAmountCents;
+        }
+    }
+</script>
+
+<script>
+    var creditHours = @creditHours;
+    var amountToBePaid = @Model.Account.AmountToBePaid;
+    var totalPaid = (creditHours * 100) - amountToBePaid;
+    totalPaid = totalPaid.toFixed(2);
+</script>
+
+<script>
+    document.getElementById("totalPaid").textContent = totalPaid;
+</script>
+
+

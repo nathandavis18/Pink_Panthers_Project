@@ -1,0 +1,170 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.to-do-header {
+    width: 300px;
+    background-color: #eb7171;
+    color: black;
+    height: 50px;
+    font-size: x-large;
+    font-weight: bolder;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
+
+.notification_header {
+    background-color: #8bc4b0 !important;
+}
+
+.notification {
+    border-radius: 0px !important;
+}
+
+.to-do-list {
+    width: 300px;
+    text-align: center;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+    position: absolute;
+    right: 70px;
+
+}
+    
+.to-do-card {
+    width: 300px;
+    background-color: white;
+    border-bottom: solid;
+}
+
+.custom-card {
+    width: 300px;
+    height: 300px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 10px;
+}
+
+.card-header {
+    color: white;
+    height: 50px;
+    font-size: x-large;
+    border-top-left-radius: 10px !important;
+    border-top-right-radius: 10px !important;
+}
+
+.card-body {
+    font-size: 15pt;
+}
+
+.btn-login {
+    display: inline-block;
+    background-color: #216ade;
+    font-size: 20px;
+    border-radius: 8px;
+    border: 2px solid #216ade;
+    padding: 0px 20px;
+    width: 200px;
+    color: white;
+    margin-top: 10px;
+}
+
+    .btn-login:hover {
+        background-color: white;
+        color: #216ade;
+        border: 2px solid #216ade;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+
+.btn-signup {
+    display: inline-block;
+    font-size: 20px;
+    border-radius: 8px;
+    background-color: lightgray;
+    border: 2px solid lightgray;
+    padding: 0px 20px;
+    width: 200px;
+    color: black;
+    margin-top: 10px;
+}
+
+    .btn-signup:hover {
+        background-color: white;
+        border: 2px solid lightgray;
+        box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+        color: black;
+        width: 200px;
+    }
+
+a.no-decoration {
+    text-decoration: none;
+    color: inherit;
+}
+
+a.no-decoration:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+.custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 1px solid #ccc;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 5px 30px 5px 5px;
+    width: 150px;
+    cursor: pointer;
+    background: white url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") no-repeat right center;
+    background-size: 20px;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.keyword {
+    border: 1px solid #ccc;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 5px 30px 5px 5px;
+    width: 200px;
+    cursor: pointer;
+    background: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+select {
+    max-height: 100px; /* Adjust this value to your preference */
+    overflow: auto;
+}
+
+
+.save-btn, .cancel-btn, .edit-btn, .upload-btn, .checkout-button {
+    margin-top: 8px;
+}
+

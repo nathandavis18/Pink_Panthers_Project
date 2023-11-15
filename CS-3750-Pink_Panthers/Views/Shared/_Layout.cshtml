@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Pink_Panthers_Project</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Pink_Panthers_Project.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-black border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Pink_Panthers_Project</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Profile" asp-action="Index">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Profile" asp-action="Details" id="editProfileLink">Edit Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Profile" asp-action="FileUpload">Change Profile Picture</a>
+                        </li>
+                        @if (!ViewBag.isTeacher)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Class" asp-action="Index" id="classBtn">Classes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Profile" asp-action="Register" id="registerLink">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Profile" asp-action="Account">Account</a>
+                            </li>
+                        }
+                        else if (ViewBag.isTeacher)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Class" asp-action="Index" id="ClassLink">Classes</a>
+                            </li>
+                            @if(ViewBag.Class != null)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-action="Assignments" asp-controller="Class">Assignments</a>
+                                </li>
+                            }
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Profile" asp-action="Calendar">Calendar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Logout">Logout</a>
+                        </li>
+                    </ul>
+
+                    @if (!ViewBag.isTeacher)
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <button class="notification_button" style="background-color: #000; border: solid;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="#FFF" class="bi bi-bell" viewBox="0 0 16 16">
+                                        <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
+                                    </svg>
+                                </button>
+                            </li>
+                            <li class="notification-count">
+                                @if(Model.Notifications.Count > 0)
+                                {
+                                    <b>@Model.Notifications.Count</b>
+                                }
+                            </li>
+                        </ul>
+                    }
+                    
+                </div>
+            </div>
+        </nav>
+    </header>
+    @if (Model != null)
+    {
+        <div class="col-md-3">
+            <div class="notifications">
+                <div class="notification_header">
+                    <b>Notifications</b>
+                    <div class="exit_button clickable">x</div>
+                </div>
+
+                @if (!ViewBag.isTeacher)
+                {
+                    @if(Model.Notifications.Count != 0){
+                        @foreach (var notification in Model.Notifications)
+                        {
+                            <div class="notification">
+                                <b>@notification.ClassName</b>
+                                <form asp-action="ClearNotification" asp-controller="Profile">
+                                    @{
+                                        Uri returnUrl = new Uri(String.Format("{0}://{1}{2}{3}", Context.Request.Scheme, Context.Request.Host, Context.Request.Path, Context.Request.QueryString));
+                                    }
+                                    <div class="clear-notif">
+                                        <input type="submit" class="btn" value="x"/>
+                                        <input type="hidden" name="notificationID" value="@notification.Id" />
+                                        <input type="hidden" name="returnUrl" value="@returnUrl" />
+                                    </div>
+                                    </form>
+                                <br /><b>@notification.AssignmentName</b><br />
+                                <b>@notification.NotificationString</b><br />
+                                <b>Due: @notification.DueDate.ToString("MM/dd/yyyy h:mm tt")</b>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="notification">
+                            <b>No Notifications</b>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <script>
+            var down = document.getElementById("notifications");
+            var x = document.querySelector('.exit_button');
+            x.addEventListener('click', function () {
+                var x1 = document.querySelector('.notifications');
+                x1.style.display = "none";
+            });
+        </script>
+    }
+
+    <script>
+        var down = document.getElementById("notifications");
+        var bell = document.querySelector('.notification_button');
+        bell.addEventListener('click', function () {
+            var x = document.querySelector('.notifications');
+            x.style.display = "block";
+        });
+    </script>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,29 @@
+﻿@model Pink_Panthers_Project.Models.ViewModel
+
+@{
+    ViewData["Title"] = "Change Profile Picture";
+}
+<h2>Change Profile Picture</h2>
+<form method="post" enctype="multipart/form-data" asp-controller="Profile" asp-action="FileUpload">
+    @if (ViewData.ModelState.ContainsKey("NoImage"))
+    {
+        <em>Upload an image first!</em>
+        <br />
+        <br />
+    }
+    <div>
+        <span>Select File:</span>
+    
+        <input type="file" accept="image/png, image/jpeg, image/jpg" name="postedFile" />
+    </div>
+
+    <div>
+        <input class="btn btn-primary upload-btn" type="submit" value="Upload" />
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <span>@Html.Raw(ViewBag.Message)</span>
+
+</form> 
