@@ -69,12 +69,5 @@
 
         public decimal AmountToPay { get; set; }
 
-		/**
-		 * Grade View Stuff
-		 * ------------------------------------------------------------------
-		*/
-
-		public List<RGB>? GraphColor {  get; set; }
-
     }
 }

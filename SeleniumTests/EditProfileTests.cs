@@ -44,10 +44,10 @@ namespace SeleniumTests
             System.Threading.Thread.Sleep(1000);
 
             IWebElement city = driver.FindElement(By.Id("cityText"));
+            city.Click();
             city.SendKeys("Bornem");
+            city.SendKeys(Keys.Return);
 
-            IWebElement saveButton = driver.FindElement(By.Id("saveButton"));
-            saveButton.Click();
 
             System.Threading.Thread.Sleep(2000);
 
@@ -64,9 +64,7 @@ namespace SeleniumTests
 
             city = driver.FindElement(By.Id("cityText"));
             city.Clear();
-
-            saveButton = driver.FindElement(By.Id("saveButton"));
-            saveButton.Click();
+            city.SendKeys(Keys.Return);
 
             System.Threading.Thread.Sleep(2000);
 
